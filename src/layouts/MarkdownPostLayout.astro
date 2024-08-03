@@ -1,4 +1,5 @@
 ---
+import FormattedDate from "../components/FormattedDate.astro";
 import BaseLayout from "./BaseLayout.astro";
 
 const { metadata } = Astro.props;
@@ -6,7 +7,7 @@ const { metadata } = Astro.props;
 
 <BaseLayout pageTitle={metadata.title}>
   <p><em>{metadata.description}</em></p>
-  <p>{metadata.pubDate.toString().slice(0, 10)}</p>
+  <FormattedDate date={metadata.pubDate}/>
 
   <p>Written by: {metadata.author}</p>
 
