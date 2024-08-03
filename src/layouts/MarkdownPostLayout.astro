@@ -1,20 +1,20 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 
-const { frontmatter } = Astro.props;
+const { metadata } = Astro.props;
 ---
 
-<BaseLayout pageTitle={frontmatter.title}>
-  <p><em>{frontmatter.description}</em></p>
-  <p>{frontmatter.pubDate.toString().slice(0, 10)}</p>
+<BaseLayout pageTitle={metadata.title}>
+  <p><em>{metadata.description}</em></p>
+  <p>{metadata.pubDate.toString().slice(0, 10)}</p>
 
-  <p>Written by: {frontmatter.author}</p>
+  <p>Written by: {metadata.author}</p>
 
-  <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
+  <img src={metadata.image.url} width="300" alt={metadata.image.alt} />
 
   <div class="tags">
     {
-      frontmatter.tags.map((tag) => (
+      metadata.tags.map((tag) => (
         <p class="tag">
           <a href={`/tags/${tag}`}>{tag}</a>
         </p>
