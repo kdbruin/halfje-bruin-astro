@@ -1,8 +1,10 @@
 ---
+import { getEntry } from "astro:content";
 import FormattedDate from "../components/FormattedDate.astro";
 import BaseLayout from "./BaseLayout.astro";
 
 const { metadata } = Astro.props;
+const series = metadata.series ? await getEntry(metadata.series) : undefined;
 ---
 
 <BaseLayout pageTitle={metadata.title}>
@@ -10,6 +12,10 @@ const { metadata } = Astro.props;
   <FormattedDate date={metadata.pubDate}/>
 
   <p>Written by: {metadata.author}</p>
+
+  {
+    series && <p>Part of series: {series.data.title}</p>
+  }
 
   <img src={metadata.image.url} width="300" alt={metadata.image.alt} />
 
