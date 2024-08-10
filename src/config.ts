@@ -9,6 +9,10 @@ export const NAV_ITEMS: NavItems = {
 		path: "/blog",
 		title: "blog",
 	},
+	series: {
+		path: "/series",
+		title: "series",
+	},
 	tags: {
 		path: "/tags",
 		title: "tags",

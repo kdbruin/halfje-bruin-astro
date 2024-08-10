@@ -1,10 +1,10 @@
 ---
-import BaseHead from '$/components/BaseHead.astro'
-import MainLayout from '$/components/MainLayout.astro'
-import Prose from '$/components/Prose.astro'
-import { SITE, USE_POST_IMG_OVERLAY } from '$/config'
-import type { CollectionEntry } from 'astro:content'
+import { getEntry, type CollectionEntry } from 'astro:content'
+import BaseHead from '../components/BaseHead.astro'
 import DateTime from '../components/DateTime.astro'
+import MainLayout from '../components/MainLayout.astro'
+import Prose from '../components/Prose.astro'
+import { SITE, USE_POST_IMG_OVERLAY } from '../config'
 
 interface Props {
     meta?: {
@@ -15,7 +15,7 @@ interface Props {
     content: CollectionEntry<'blog'>['data']
 }
 const { content, meta } = Astro.props
-
+const series = content.series ? await getEntry(content.series) : undefined
 ---
 
 <!doctype html>
@@ -45,9 +45,17 @@ const { content, meta } = Astro.props
                 }
             </div>
             <h1 class="post__title">{content.title}</h1>
-            <h5
-                class="post__desc"
-            >
+            {
+                series && (
+                    <h4 class="post__series">
+                        Uit de serie:{' '}
+                        <a href={`/series/${series.slug}`}>
+                            {series.data.title}
+                        </a>
+                    </h4>
+                )
+            }
+            <h5 class="post__desc">
                 <div>
                     <span class="post__date">
                         <!-- post creation/updation data -->

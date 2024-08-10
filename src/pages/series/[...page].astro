@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content'
+import Paginator from '../../components/Paginator.astro'
+import SeriesPreviewList from '../../components/SeriesPreviewList.astro'
+import { PAGE_SIZE } from '../../config'
+import DefaultPageLayout from '../../layouts/default.astro'
+
+let title = 'Series'
+let description = 'Alle series...'
+
+export async function getStaticPaths({ paginate }) {
+    const allSeries = await getCollection('series')
+    const sortedSeries = allSeries.sort((a,b) => a.data.title.toLowerCase() - b.data.title.toLowerCase())
+
+    return paginate(sortedSeries, {
+        pageSize: PAGE_SIZE,
+    })
+}
+
+const { page } = Astro.props
+---
+
+<DefaultPageLayout content={{ title, description }}>
+    <SeriesPreviewList series={page.data} />
+    <Paginator page={page} />
+</DefaultPageLayout>

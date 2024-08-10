@@ -1,0 +1,45 @@
+---
+import { getCollection, getEntryBySlug } from 'astro:content'
+import Code from '../../components/Code.astro'
+import DefaultPageLayout from '../../layouts/default.astro'
+import PostPreviewList from '../../components/PostPreviewList.astro'
+import { sortPostsAscending } from '../../utils'
+
+export async function getStaticPaths() {
+    const allSeries = await getCollection('series')
+    return allSeries.map((_series) => ({
+        params: {
+            slug: _series.slug,
+        },
+    }))
+}
+
+const { slug } = Astro.params
+const entry = await getEntryBySlug('series', slug!)
+
+const { title, description } = entry.data
+const { Content } = await entry.render()
+
+const seriesPosts = await getCollection(
+    'blog',
+    ({ data }) => data.series?.slug === slug
+)
+const sortedPosts = sortPostsAscending(seriesPosts)
+---
+
+<DefaultPageLayout content={{ title, description }}>
+    <div class="series__content">
+        <Content
+            components={{
+                code: Code,
+            }}
+        />
+    </div>
+    <PostPreviewList posts={sortedPosts} />
+</DefaultPageLayout>
+
+<style>
+    .series__content {
+        @apply mb-4;
+    }
+</style>

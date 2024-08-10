@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SeriesPreview from './SeriesPreview.astro';
+
+interface Props {
+    series: CollectionEntry<'series'>
+    heading?: string
+    mode?: 'row' | 'col'
+}
+
+const { series, heading, mode = 'col' } = Astro.props
+---
+{ heading ? <h5 class={`series-preview__heading series-preview__heading--${mode} ink-h`}>{heading}</h5> : ''}
+<section class={`series-preview__list series-preview__list--${mode}`}>
+    {series.map((_series) => (
+        <SeriesPreview series={_series} asCard={mode === 'row' ? true : false }/>
+    ))}
+</section>
+<style>
+    .series-preview__heading {
+        @apply pl-0 sm:pl-6
+    }
+    .series-preview__heading--row {
+        @apply pl-0
+    }
+    .series-preview__list {
+        @apply flex flex-col gap-12
+    }
+    .series-preview__list--row {
+        @apply flex-row flex-wrap md:px-6 lg:px-0 gap-12 md:gap-8 sm:gap-10 lg:gap-12
+    }
+    .series-preview__list--col {
+        @apply flex-col gap-12
+    }
+</style>
