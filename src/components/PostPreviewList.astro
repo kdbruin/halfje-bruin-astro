@@ -9,11 +9,10 @@ interface Props {
 }
 
 const { posts, heading, mode = 'col' } = Astro.props
-const sortedPosts = posts.sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf());
 ---
 { heading ? <h5 class={`post-preview__heading post-preview__heading--${mode} ink-h`}>{heading}</h5> : ''}
 <section class={`post-preview__list post-preview__list--${mode}`}>
-    {sortedPosts.map((post) => (
+    {posts.map((post) => (
         <PostPreview post={post} asCard={mode === 'row' ? true : false }/>
     ))}
 </section>

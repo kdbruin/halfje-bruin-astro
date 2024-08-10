@@ -25,9 +25,9 @@ export const NAV_ITEMS: NavItems = {
 
 export const SITE = {
 	// Your site's detail?
-	name: "Ink",
-	title: "Astro - Ink",
-	description: "Crisp, minimal, personal blog theme for Astro",
+	name: "Halfje-Bruin",
+	title: "Halfje-Bruin.nl",
+	description: "Persoonlijke website van Kees de Bruin",
 	url: "https://halfje-bruin.nl",
 	githubUrl: "https://github.com/kdbruin/halfje-bruin-astro",
 	image:
@@ -46,7 +46,7 @@ export const SITE = {
 		"Crisp, minimal, personal blog theme for Astro. Crisp, minimal, personal blog theme for Astro. Crisp, minimal, personal blog theme for Astro",
 };
 
-// Ink - Theme configuration
+// Theme configuration
 export const PAGE_SIZE = 8;
 export const USE_POST_IMG_OVERLAY = false;
 export const USE_MEDIA_THUMBNAIL = true;

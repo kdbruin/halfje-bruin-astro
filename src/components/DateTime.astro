@@ -5,7 +5,7 @@ interface Props {
     lang?: Intl.LocalesArgument,
     dateStyle?: "full" | "long" | "medium" | "short"
 }
-const { value, title, lang = 'en-US', dateStyle = 'full' } = Astro.props
+const { value, title, lang = 'nl-NL', dateStyle = 'full' } = Astro.props
 ---
 <time title={title} datetime={value.toISOString()}>
     {value.toLocaleDateString(lang, { dateStyle, timeZone: 'UTC' })}
