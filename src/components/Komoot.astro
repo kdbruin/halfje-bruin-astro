@@ -1,0 +1,55 @@
+---
+import { KOMOOT_SITE_URL } from '../config'
+
+type KomootItemType = 'tour' | 'highlight' | 'collection' | 'user'
+
+export interface Props {
+    // Item id
+    id: string
+
+    // Item type
+    type?: KomootItemType
+
+    // Show the elevation profile
+    elevation?: boolean
+
+    // Show the gallery view as default
+    gallery?: boolean
+
+    // Width of the embedded iframe
+    width?: string
+
+    // Height of the embedded iframe
+    height?: number
+}
+
+const site_url = KOMOOT_SITE_URL
+const elevation_height = 100
+
+const {
+    id,
+    type = 'tour',
+    elevation = false,
+    gallery = false,
+    width = '100%',
+    height = 580,
+} = Astro.props
+
+const embed_height = height + (elevation ? elevation_height : 0)
+
+const query_params: string[] = []
+if (elevation) query_params.push('profile=1')
+if (gallery) query_params.push('gallery=1')
+---
+
+{
+    site_url && (
+        <div>
+            <iframe
+                src={`${site_url}/${type}/${id}/embed?${query_params.join('&')}`}
+                width={width}
+                height={`${embed_height}px`}
+            />
+        </div>
+    )
+}
