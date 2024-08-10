@@ -15,20 +15,7 @@ const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
 const happy = true;
 const finished = false;
 const goal = 3;
-
-const skillColor = "navy";
-const fontWeight = "bold";
-const textCase = "uppercase";
 ---
-
-<style define:vars={{ skillColor, fontWeight, textCase }}>
-  .skill {
-    color: var(--skillColor);
-    font-weight: var(--fontWeight);
-    text-transform: var(--textCase);
-  }
-</style>
-
 <BaseLayout pageTitle={pageTitle}>
   <h2>... and my new Astro site!</h2>
 
