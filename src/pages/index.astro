@@ -1,9 +1,8 @@
 ---
-export const prerender = true
-
 import PostPreviewList from '$/components/PostPreviewList.astro'
 import Prose from '$/components/Prose.astro'
 import DefaultPageLayout from '$/layouts/default.astro'
+import { sortPostsDescending } from "$/utils"
 import { getCollection } from 'astro:content'
 import { Content as AboutHalfjeBruin } from './_halfje-bruin.md'
 
@@ -11,9 +10,7 @@ const title = 'Home'
 const description = 'Persoonlijke website van Kees de Bruin'
 
 const posts = await getCollection('blog')
-const sortedPosts = posts.sort(
-    (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
-)
+const sortedPosts = sortPostsDescending(posts)
 ---
 
 <DefaultPageLayout content={{ title, description }} showPageHeader={false}>
@@ -22,7 +19,7 @@ const sortedPosts = posts.sort(
             <div class="author-card">
                 <img
                     src="https://assets.website-files.com/5e51c674258ffe10d286d30a/5e5358878e2493fbea064dd9_peep-59.svg"
-                    title="Aalam"
+                    title="Kees"
                 />
             </div>
         </div>

@@ -1,27 +1,26 @@
 ---
-export const prerender = true
-
-import { getCollection } from 'astro:content'
-import DefaultPageLayout from '$/layouts/default.astro'
-import PostPreviewList from '$/components/PostPreviewList.astro'
 import Paginator from '$/components/Paginator.astro'
+import PostPreviewList from '$/components/PostPreviewList.astro'
 import { PAGE_SIZE } from '$/config'
+import DefaultPageLayout from '$/layouts/default.astro'
+import { sortPostsDescending } from '$/utils'
+import { getCollection } from 'astro:content'
 
 let title = 'Blog'
-let description = 'All the articles posted so far...'
+let description = 'Alle gepubliceerde berichten tot nu toe...'
 
 export async function getStaticPaths({ paginate }) {
-  const allPosts = await getCollection('blog');
-  const sortedPosts = allPosts.sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+    const allPosts = await getCollection('blog')
+    const sortedPosts = sortPostsDescending(allPosts)
 
     return paginate(sortedPosts, {
-      pageSize: PAGE_SIZE
+        pageSize: PAGE_SIZE,
     })
 }
 
 const { page } = Astro.props
-
 ---
+
 <DefaultPageLayout content={{ title, description }}>
     <PostPreviewList posts={page.data} />
     <Paginator page={page} />
