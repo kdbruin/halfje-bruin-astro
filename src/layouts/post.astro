@@ -2,9 +2,10 @@
 import { getEntry, type CollectionEntry } from 'astro:content'
 import BaseHead from '../components/BaseHead.astro'
 import DateTime from '../components/DateTime.astro'
+import FeaturedImage from '../components/FeaturedImage.astro'
 import MainLayout from '../components/MainLayout.astro'
 import Prose from '../components/Prose.astro'
-import { SITE, USE_POST_IMG_OVERLAY } from '../config'
+import { SITE } from '../config'
 
 interface Props {
     meta?: {
@@ -30,10 +31,10 @@ const series = content.series ? await getEntry(content.series) : undefined
     </head>
     <MainLayout>
         <div class="post__header">
-            <div class="post__tags">
-                {
-                    content.tags.length > 0 &&
-                        content.tags.map((tag) => (
+            {
+                content.tags && (
+                    <div class="post__tags">
+                        {content.tags.map((tag) => (
                             <a
                                 class="post__tag"
                                 href={`/tags/${tag}`}
@@ -41,9 +42,10 @@ const series = content.series ? await getEntry(content.series) : undefined
                             >
                                 {tag}
                             </a>
-                        ))
-                }
-            </div>
+                        ))}
+                    </div>
+                )
+            }
             <h1 class="post__title">{content.title}</h1>
             {
                 series && (
@@ -64,30 +66,7 @@ const series = content.series ? await getEntry(content.series) : undefined
                 </div>
             </h5>
         </div>
-        {
-            content.image ? (
-                USE_POST_IMG_OVERLAY ? (
-                    <>
-                        <div class="img__outer">
-                            <img src={content.image} alt={content.title} />
-                            <div class="img_gradient" />
-                        </div>
-                        <br />
-                    </>
-                ) : (
-                    <>
-                        <img
-                            class="img__outer"
-                            src={content.image}
-                            alt={content.title}
-                        />
-                        <br />
-                    </>
-                )
-            ) : (
-                ''
-            )
-        }
+        <FeaturedImage image={content.image} />
         <Prose>
             <slot />
         </Prose>
@@ -112,12 +91,5 @@ const series = content.series ? await getEntry(content.series) : undefined
     }
     .post__tag {
         @apply text-gray-400 hover:text-theme-primary dark:hover:text-theme-dark-primary;
-    }
-
-    .img__outer {
-        @apply relative rounded-lg shadow-xl overflow-hidden;
-    }
-    .img_gradient {
-        @apply absolute z-10 w-full bottom-0 left-0 h-full bg-gradient-to-tr from-theme-primary dark:from-theme-dark-primary;
     }
 </style>

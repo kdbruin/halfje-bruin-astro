@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets'
+
+const { image } = Astro.props
+---
+
+{
+    image && (
+        <Image
+            class="featured-image"
+            src={image.src}
+            width="896"
+            format="webp"
+            quality="mid"
+            alt={image.title}
+        />
+        <br />
+    )
+}
+
+<style>
+    .featured-image {
+        @apply relative rounded-lg shadow-xl overflow-hidden;
+    }
+</style>
