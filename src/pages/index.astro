@@ -1,9 +1,13 @@
 ---
-import PostPreviewList from '$/components/PostPreviewList.astro'
-import Prose from '$/components/Prose.astro'
-import DefaultPageLayout from '$/layouts/default.astro'
-import { sortPostsDescending } from "$/utils"
+//
+// Home page
+//
+
 import { getCollection } from 'astro:content'
+import PostPreviewList from '../components/PostPreviewList.astro'
+import Prose from '../components/Prose.astro'
+import DefaultPageLayout from '../layouts/default.astro'
+import { sortPostsDescending } from "../utils"
 import { Content as AboutHalfjeBruin } from './_halfje-bruin.md'
 
 const title = 'Home'

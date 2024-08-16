@@ -1,8 +1,12 @@
 ---
+//
+// All posts belonging to a specific tag
+//
+
 import { getCollection } from 'astro:content'
 import PostPreviewList from '../../../components/PostPreviewList.astro'
 import DefaultPageLayout from '../../../layouts/default.astro'
-import { getTags } from '../../../utils'
+import { getTags, sortPostsDescending } from '../../../utils'
 
 export async function getStaticPaths({}) {
     const allPosts = await getCollection('blog')
@@ -15,21 +19,21 @@ export async function getStaticPaths({}) {
         return {
             params: { tag },
             props: {
-                pages: filteredPosts,
+                posts: sortPostsDescending(filteredPosts),
             },
         }
     })
 }
 
-const { pages } = Astro.props
+const { posts } = Astro.props
 const { tag } = Astro.params
 ---
 
 <DefaultPageLayout
     content={{
         title: `Berichten met tag: ${tag}`,
-        description: `alle berichten welke zijn getagged met: ${tag}`,
+        description: `alle berichten met de tag: ${tag}`,
     }}
 >
-    <PostPreviewList posts={pages} />
+    <PostPreviewList posts={posts} />
 </DefaultPageLayout>

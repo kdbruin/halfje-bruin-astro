@@ -1,4 +1,8 @@
 ---
+//
+// Categories index
+//
+
 import { getCollection } from 'astro:content'
 import DefaultPageLayout from '../../layouts/default.astro'
 import { getCategories } from '../../utils'
@@ -25,8 +29,8 @@ const categories = getCategories(allPosts)
                     </a>
                 </li>
             ))
+        </ul>
         }
-    </ul>
 </DefaultPageLayout>
 
 <style>
