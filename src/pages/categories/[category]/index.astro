@@ -2,18 +2,18 @@
 import { getCollection } from 'astro:content'
 import PostPreviewList from '../../../components/PostPreviewList.astro'
 import DefaultPageLayout from '../../../layouts/default.astro'
-import { getTags } from '../../../utils'
+import { getCategories } from '../../../utils'
 
 export async function getStaticPaths({}) {
     const allPosts = await getCollection('blog')
-    const allTags = getTags(allPosts)
+    const allCategories = getCategories(allPosts)
 
-    return allTags.flatMap((tag) => {
+    return allCategories.flatMap((category) => {
         const filteredPosts = allPosts.filter((post) =>
-            post.data.tags?.includes(tag)
+            post.data.category === category
         )
         return {
-            params: { tag },
+            params: { category: category },
             props: {
                 pages: filteredPosts,
             },
@@ -22,13 +22,13 @@ export async function getStaticPaths({}) {
 }
 
 const { pages } = Astro.props
-const { tag } = Astro.params
+const { category } = Astro.params
 ---
 
 <DefaultPageLayout
     content={{
-        title: `Berichten met tag: ${tag}`,
-        description: `alle berichten welke zijn getagged met: ${tag}`,
+        title: `Berichten uit de category: ${category}`,
+        description: `alle berichten uit de categorie: ${category}`,
     }}
 >
     <PostPreviewList posts={pages} />

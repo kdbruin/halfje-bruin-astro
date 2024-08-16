@@ -6,8 +6,8 @@ import DefaultPageLayout from '$/layouts/default.astro'
 import { sortPostsDescending } from '$/utils'
 import { getCollection } from 'astro:content'
 
-let title = 'Blog'
-let description = 'Alle gepubliceerde berichten tot nu toe...'
+const title = 'Blog'
+const description = 'Alle gepubliceerde berichten tot nu toe...'
 
 export async function getStaticPaths({ paginate }) {
     const allPosts = await getCollection('blog')

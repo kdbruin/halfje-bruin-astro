@@ -5,8 +5,8 @@ import SeriesPreviewList from '../../components/SeriesPreviewList.astro'
 import { PAGE_SIZE } from '../../config'
 import DefaultPageLayout from '../../layouts/default.astro'
 
-let title = 'Series'
-let description = 'Alle series...'
+const title = 'Series'
+const description = 'Alle series...'
 
 export async function getStaticPaths({ paginate }) {
     const allSeries = await getCollection('series')

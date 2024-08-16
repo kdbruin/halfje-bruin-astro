@@ -5,18 +5,18 @@ import Paginator from '../../../components/Paginator.astro'
 import PostPreviewList from '../../../components/PostPreviewList.astro'
 import { PAGE_SIZE } from '../../../config'
 import DefaultPageLayout from '../../../layouts/default.astro'
-import { getTags } from '../../../utils'
+import { getCategories } from '../../../utils'
 
 export async function getStaticPaths({ paginate }) {
     const allPosts = await getCollection('blog')
-    const allTags = getTags(allPosts)
+    const allCategories = getCategories(allPosts)
 
-    return allTags.flatMap((tag) => {
-        const filteredPosts = allPosts.filter((post) =>
-            post.data.tags?.includes(tag)
+    return allCategories.flatMap((category) => {
+        const filteredPosts = allPosts.filter(
+            (post) => post.data.category === category
         )
         return paginate(filteredPosts, {
-            params: { tag },
+            params: { category: category },
             pageSize: PAGE_SIZE,
         })
     })
@@ -26,13 +26,13 @@ type Params = InferGetStaticParamsType<typeof getStaticPaths>
 type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
 const { page } = Astro.props as Props
-const { tag } = Astro.params as Params
+const { tag: category } = Astro.params as Params
 ---
 
 <DefaultPageLayout
     content={{
-        title: `Berichten met tag: ${tag}`,
-        description: `alle berichten welke zijn getagged met: ${tag}`,
+        title: `Berichten uit de category: ${category}`,
+        description: `alle berichten uit de categorie: ${category}`,
     }}
 >
     <PostPreviewList posts={page.data} />

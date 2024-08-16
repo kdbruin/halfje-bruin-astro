@@ -13,6 +13,10 @@ export const NAV_ITEMS: NavItems = {
         path: '/series',
         title: 'series',
     },
+    categories: {
+        path: '/categories',
+        title: 'categorieën',
+    },
     tags: {
         path: '/tags',
         title: 'tags',
@@ -34,6 +38,6 @@ export const SITE = {
 }
 
 // Theme configuration
-export const PAGE_SIZE = 8
+export const PAGE_SIZE = 3
 
 export const KOMOOT_SITE_URL = 'https://www.komoot.com/nl-nl'

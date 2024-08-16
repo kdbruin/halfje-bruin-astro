@@ -1,27 +1,27 @@
 ---
 import { getCollection } from 'astro:content'
 import DefaultPageLayout from '../../layouts/default.astro'
-import { getTags } from '../../utils'
+import { getCategories } from '../../utils'
 
-const title = 'Alle Tags'
-const description = 'Overicht van alle gebruikte tags.'
+const title = 'Alle Categorieën'
+const description = 'Overzicht van alle gebruikte categorieën.'
 
 const allPosts = await getCollection('blog')
-const tags = getTags(allPosts)
+const categories = getCategories(allPosts)
 ---
 
 <DefaultPageLayout content={{ title, description }}>
-    <ul class="tag-list">
+    <ul class="category-list">
         {
-            tags.map((tag) => (
+            Array.from(categories.values()).map((category) => (
                 <li>
                     <a
-                        class="tag"
-                        href={`/tags/${tag}`}
-                        title={`Toon berichten getagged met "${tag}"`}
+                        class="category"
+                        href={`/categories/${category}`}
+                        title={`Toon berichten voor categorie "${category}"`}
                         transition:animate="slide"
                     >
-                        {tag}
+                        {category}
                     </a>
                 </li>
             ))
@@ -30,10 +30,10 @@ const tags = getTags(allPosts)
 </DefaultPageLayout>
 
 <style>
-    .tag-list {
+    .category-list {
         @apply list-none flex gap-2 flex-wrap;
     }
-    .tag {
+    .category {
         @apply inline-block text-xl px-4 py-1 rounded-full text-theme-primary bg-theme-dark-primary dark:bg-theme-primary dark:text-theme-dark-primary hover:bg-theme-primary hover:text-theme-dark-primary dark:hover:bg-theme-dark-primary dark:hover:text-theme-primary;
     }
 </style>
