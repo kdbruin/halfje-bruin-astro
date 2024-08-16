@@ -38,6 +38,6 @@ export const SITE = {
 }
 
 // Theme configuration
-export const PAGE_SIZE = 3
+export const PAGE_SIZE = 8
 
 export const KOMOOT_SITE_URL = 'https://www.komoot.com/nl-nl'
