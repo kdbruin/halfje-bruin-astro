@@ -9,10 +9,12 @@ const { image } = Astro.props
         <Image
             class="featured-image"
             src={image.src}
-            width="896"
-            format="webp"
-            quality="mid"
             alt={image.title}
+            widths={[896]}
+            sizes={`896px`}
+            format={"webp"}
+            quality="mid"
+            loading="eager"
         />
         <br />
     )
