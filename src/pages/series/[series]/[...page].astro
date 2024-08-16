@@ -1,47 +1,44 @@
 ---
 //
-// Paginated posts for a specific tag
+// Paginated posts for a single series
 //
 
-import type { Page } from 'astro'
+import { InferGetStaticParamsType, InferGetStaticPropsType, Page } from 'astro'
 import { CollectionEntry, getCollection } from 'astro:content'
 import Paginator from '../../../components/Paginator.astro'
 import PostPreviewList from '../../../components/PostPreviewList.astro'
 import { PAGE_SIZE } from '../../../config'
 import DefaultPageLayout from '../../../layouts/default.astro'
-import { getTags, sortPostsDescending } from '../../../utils'
+import { sortPostsDescending } from '../../../utils'
 
 export async function getStaticPaths({ paginate }) {
     const allPosts = await getCollection('blog')
-    const allTags = getTags(allPosts)
+    const allSeries = await getCollection('series')
 
-    return allTags.flatMap((tag) => {
+    return allSeries.flatMap((series) => {
         const filteredPosts = allPosts.filter((post) =>
-            post.data.tags?.includes(tag)
+            post.data.series?.slug === series.slug
         )
         return paginate(sortPostsDescending(filteredPosts), {
-            params: { tag },
+            params: { series: series.slug },
+            props: { series },
             pageSize: PAGE_SIZE,
         })
     })
 }
 
-interface Params {
-    tag: string
-}
-
 interface Props {
     page: Page<CollectionEntry<'blog'>>,
+    series: CollectionEntry<'series'>
 }
 
-const { page } = Astro.props as Props
-const { tag } = Astro.params as Params
+const { page, series } = Astro.props
 ---
 
 <DefaultPageLayout
     content={{
-        title: `Tag: ${tag}`,
-        description: `alle berichten met de tag: ${tag}`,
+        title: `${series.data.title}`,
+        description: `alle berichten uit de serie: ${series.data.title}`,
     }}
 >
     <PostPreviewList posts={page.data} />

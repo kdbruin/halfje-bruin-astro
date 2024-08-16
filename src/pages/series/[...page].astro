@@ -3,7 +3,8 @@
 // Paginated series index
 //
 
-import { getCollection } from 'astro:content'
+import { Page } from 'astro/dist/@types/astro'
+import { CollectionEntry, getCollection } from 'astro:content'
 import Paginator from '../../components/Paginator.astro'
 import SeriesPreviewList from '../../components/SeriesPreviewList.astro'
 import { PAGE_SIZE } from '../../config'
@@ -19,6 +20,10 @@ export async function getStaticPaths({ paginate }) {
     return paginate(sortedSeries, {
         pageSize: PAGE_SIZE,
     })
+}
+
+interface Props {
+    page: Page<CollectionEntry<'blog'>>
 }
 
 const { page } = Astro.props

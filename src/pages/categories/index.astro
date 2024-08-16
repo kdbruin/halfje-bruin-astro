@@ -17,7 +17,7 @@ const categories = getCategories(allPosts)
 <DefaultPageLayout content={{ title, description }}>
     <ul class="category-list">
         {
-            Array.from(categories.values()).map((category) => (
+            categories.map((category) => (
                 <li>
                     <a
                         class="category"
