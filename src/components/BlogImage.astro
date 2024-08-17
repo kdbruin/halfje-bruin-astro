@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets'
+import { findImage } from '../utils'
+
+interface Props {
+    src: string
+    title: string
+}
+
+const { src, title } = Astro.props as Props
+
+// Find all images used in the blog posts
+const allImages = import.meta.glob<{ default: ImageMetadata }>("/src/content/blog/**/*.{jpeg,jpg,png,gif}")
+
+// Do we have a match
+const image = findImage(src, allImages)
+if (!image) {
+    throw new Error(`Could not find image "${src}"`)
+}
+---
+{
+    <Image
+        class="blog-image"
+        src={image()}
+        alt={title}
+        widths={[896]}
+        sizes={`896px`}
+        format={"webp"}
+        quality="mid"
+        loading="lazy"
+    />
+}
+
+<style>
+    .blog-image {
+        @apply relative rounded-lg shadow-xl overflow-hidden;
+    }
+</style>

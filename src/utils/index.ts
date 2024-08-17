@@ -47,3 +47,13 @@ export const getCategories = (posts: CollectionEntry<'blog'>[]) => {
     }
     return Array.from(categories.values())
 }
+
+export const findImage = (
+    imagePath: string,
+    images: { [key: string]: Function }
+) => {
+    const filteredImages = Object
+        .keys(images)
+        .filter((key) => key.endsWith(imagePath))
+    return filteredImages.length === 1 ? images[filteredImages[0]] : undefined
+}
