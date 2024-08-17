@@ -21,9 +21,9 @@ const blogCollection = defineCollection({
                 })
                 .optional(),
             date: z.date(),
-            category: z.string(),
             series: reference('series').optional(),
-            tags: z.array(z.string()).optional(),
+            categories: z.array(z.string().trim().toLowerCase()),
+            tags: z.array(z.string().trim().toLowerCase()).optional(),
         }),
 })
 

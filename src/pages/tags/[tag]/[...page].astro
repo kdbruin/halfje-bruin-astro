@@ -9,16 +9,14 @@ import Paginator from '../../../components/Paginator.astro'
 import PostPreviewList from '../../../components/PostPreviewList.astro'
 import { PAGE_SIZE } from '../../../config'
 import DefaultPageLayout from '../../../layouts/default.astro'
-import { getTags, sortPostsDescending } from '../../../utils'
+import { getTags, matchTag, sortPostsDescending } from '../../../utils'
 
 export async function getStaticPaths({ paginate }) {
     const allPosts = await getCollection('blog')
     const allTags = getTags(allPosts)
 
     return allTags.flatMap((tag) => {
-        const filteredPosts = allPosts.filter((post) =>
-            post.data.tags?.includes(tag)
-        )
+        const filteredPosts = allPosts.filter((post) => matchTag(post, tag))
         return paginate(sortPostsDescending(filteredPosts), {
             params: { tag },
             pageSize: PAGE_SIZE,
@@ -31,7 +29,7 @@ interface Params {
 }
 
 interface Props {
-    page: Page<CollectionEntry<'blog'>>,
+    page: Page<CollectionEntry<'blog'>>
 }
 
 const { page } = Astro.props as Props

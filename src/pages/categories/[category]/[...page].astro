@@ -9,7 +9,7 @@ import Paginator from '../../../components/Paginator.astro'
 import PostPreviewList from '../../../components/PostPreviewList.astro'
 import { PAGE_SIZE } from '../../../config'
 import DefaultPageLayout from '../../../layouts/default.astro'
-import { getCategories, sortPostsDescending } from '../../../utils'
+import { getCategories, matchCategory, sortPostsDescending } from '../../../utils'
 
 export async function getStaticPaths({ paginate }) {
     const allPosts = await getCollection('blog')
@@ -17,7 +17,7 @@ export async function getStaticPaths({ paginate }) {
 
     return allCategories.flatMap((category) => {
         const filteredPosts = allPosts.filter(
-            (post) => post.data.category === category
+            (post) => matchCategory(post, category)
         )
         return paginate(sortPostsDescending(filteredPosts), {
             params: { category },
