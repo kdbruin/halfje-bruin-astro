@@ -1,5 +1,4 @@
 import type { CollectionEntry } from 'astro:content'
-import path from 'path'
 
 const MONTHS = [
     'Jan',
@@ -22,9 +21,6 @@ export const toTitleCase = (str: string) =>
     })
 
 export const getMonthName = (date: Date) => MONTHS[new Date(date).getMonth()]
-
-export const getSlugFromPathname = (pathname: string) =>
-    path.basename(pathname, path.extname(pathname))
 
 export const sortPostsAscending = (posts: CollectionEntry<'blog'>[]) =>
     posts.sort((a, b) => a.data.date - b.data.date)
