@@ -49,12 +49,15 @@ const series = content.series ? await getEntry(content.series) : undefined
             <h1 class="post__title">{content.title}</h1>
             {
                 series && (
-                    <h4 class="post__series">
+                    <h3 class="post__series">
                         Uit de serie:{' '}
-                        <a href={`/series/${series.slug}`}>
+                        <a
+                            class="post__series-link"
+                            href={`/series/${series.slug}`}
+                        >
                             {series.data.title}
                         </a>
-                    </h4>
+                    </h3>
                 )
             }
             <h5 class="post__desc">
@@ -70,7 +73,18 @@ const series = content.series ? await getEntry(content.series) : undefined
         <Prose>
             <slot />
         </Prose>
-        <div class="post__footer"></div>
+        <div class="post__footer">
+            <span>Gepost in: </span>
+            <div class="post__categories">
+                {
+                    content.categories.map((category) => (
+                        <a class="post__category" href={`/categories/${category}`} title={category}>
+                            {category}
+                        </a>
+                    ))
+                }
+            </div>
+        </div>
     </MainLayout>
 </html>
 <style>
@@ -80,16 +94,25 @@ const series = content.series ? await getEntry(content.series) : undefined
     .post__title {
         @apply text-5xl font-extrabold text-theme-primary dark:text-theme-dark-primary;
     }
+    .post__series {
+        @apply my-2 text-xl font-medium text-gray-500 dark:text-gray-100;
+    }
+    .post__series-link {
+        @apply hover:text-theme-primary dark:hover:text-theme-dark-primary;
+    }
     .post__desc {
         @apply text-gray-500 dark:text-gray-100 flex justify-center text-left md:flex-none md:justify-start;
     }
     .post__date {
         @apply text-gray-400;
     }
-    .post__tags {
-        @apply inline-flex gap-2;
+    .post__tags, .post__categories {
+        @apply inline-flex gap-2 mb-1;
     }
-    .post__tag {
+    .post__tag, .post__category {
         @apply text-gray-400 hover:text-theme-primary dark:hover:text-theme-dark-primary;
+    }
+    .post__footer {
+        @apply mt-8 text-gray-400;
     }
 </style>
