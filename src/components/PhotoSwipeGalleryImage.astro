@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets'
+
+interface Props {
+    galleryImage: any
+}
+
+const { galleryImage } = Astro.props as Props
+
+// Load the image as a module
+const image = await galleryImage()
+
+// Determine image width
+const height = 200
+const width = Math.floor((image.default.width / image.default.height) * height)
+---
+
+<a
+    href={image.default.src}
+    data-pswp-width={image.default.width}
+    data-pswp-height={image.default.height}
+    class="flex flex-grow object-cover overflow-hidden"
+>
+    <Image
+        src={image.default}
+        width={width}
+        height={height}
+        alt=""
+        loading="lazy"
+        class=`h-[${height}px] object-cover flex-grow m-0`
+    />
+</a>

@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets'
+import { findImages } from '../utils'
+import PhotoSwipeGalleryImage from './PhotoSwipeGalleryImage.astro'
+
+interface Props {
+    galleryPrefix: string
+}
+
+const { galleryPrefix } = Astro.props as Props
+
+// Find all images used in the blog posts
+const allImages = import.meta.glob<{ default: ImageMetadata }>(
+    '/src/content/blog/**/*.{jpeg,jpg,png,gif}'
+)
+const galleryImages = findImages(galleryPrefix, allImages)
+
+---
+
+<div id="my-gallery" class="flex flex-wrap gap-2">
+    {
+        galleryImages.map((galleryImage) => (
+            <PhotoSwipeGalleryImage galleryImage={galleryImage} />
+        ))
+    }
+</div>
+
+<script>
+    import 'photoswipe/style.css'
+    import pswpModule from 'photoswipe'
+    import PhotoSwipeLightbox from 'photoswipe/lightbox'
+
+    const lightbox = new PhotoSwipeLightbox({
+        pswpModule,
+        children: 'a',
+        gallery: '#my-gallery',
+    })
+
+    document.addEventListener(
+        'astro:page-load',
+        () => {
+            if (lightbox) lightbox.init()
+        },
+        { once: false }
+    )
+</script>

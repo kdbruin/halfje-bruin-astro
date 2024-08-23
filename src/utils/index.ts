@@ -88,8 +88,22 @@ export const findImage = (
     imagePath: string,
     images: { [key: string]: Function }
 ) => {
-    const filteredImages = Object
+    const filteredImageKeys = Object
         .keys(images)
         .filter((key) => key.endsWith(imagePath))
-    return filteredImages.length === 1 ? images[filteredImages[0]] : undefined
+    return filteredImageKeys.length === 1 ? images[filteredImageKeys[0]] : undefined
+}
+
+/**
+ * Find all images for the given prefix
+ */
+export const findImages = (
+    galleryPrefix: string,
+    images: { [key: string]: Function }
+) => {
+    const filteredImageKeys = Object
+        .keys(images)
+        .filter((key) => key.includes(galleryPrefix))
+    
+    return filteredImageKeys.map((key) => images[key])
 }

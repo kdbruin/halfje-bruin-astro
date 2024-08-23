@@ -26,6 +26,7 @@
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^20.0.0",
+    "@types/photoswipe": "^4.1.6",
     "astro": "^4.0.3",
     "astro-icon": "^1.1.0",
     "commitizen": "^4.3.0",
@@ -41,7 +42,8 @@
   },
   "dependencies": {
     "@astrojs/markdoc": "^0.11.3",
-    "@iconify-json/mdi": "^1.1.68"
+    "@iconify-json/mdi": "^1.1.68",
+    "photoswipe": "^5.4.4"
   },
   "overrides": {
     "astro-icon": {
