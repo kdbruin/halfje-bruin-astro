@@ -5,32 +5,23 @@
 
 import { getCollection } from 'astro:content'
 import DefaultPageLayout from '../../layouts/default.astro'
-import { getTags } from '../../utils'
+import { getTags, splitTagsByLetter } from '../../utils'
+import TagList from '../../components/TagList.astro'
 
 const title = 'Alle Tags'
 const description = 'Overicht van alle gebruikte tags.'
 
 const allPosts = await getCollection('blog')
-const tags = getTags(allPosts)
+const allTags = getTags(allPosts)
+const allTagsByLetter = splitTagsByLetter(allTags)
 ---
 
 <DefaultPageLayout content={{ title, description }}>
-    <ul class="tag-list">
         {
-            tags.map((tag) => (
-                <li>
-                    <a
-                        class="tag"
-                        href={`/tags/${tag}`}
-                        title={`Toon berichten getagged met "${tag}"`}
-                        transition:animate="slide"
-                    >
-                        {tag}
-                    </a>
-                </li>
+            Array.from(allTagsByLetter.keys()).sort().map((firstLetter) => (
+                <TagList firstLetter={firstLetter} tags={allTagsByLetter.get(firstLetter)} />
             ))
         }
-    </ul>
 </DefaultPageLayout>
 
 <style>

@@ -14,8 +14,9 @@ import { getTags, matchTag, sortPostsDescending } from '../../../utils'
 export async function getStaticPaths({ paginate }) {
     const allPosts = await getCollection('blog')
     const allTags = getTags(allPosts)
+    const allKeys = Array.from(allTags.keys());
 
-    return allTags.flatMap((tag) => {
+    return allKeys.flatMap((tag) => {
         const filteredPosts = allPosts.filter((post) => matchTag(post, tag))
         return paginate(sortPostsDescending(filteredPosts), {
             params: { tag },

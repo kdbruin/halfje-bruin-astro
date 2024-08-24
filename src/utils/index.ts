@@ -44,15 +44,35 @@ export const sortPostsDescending = (posts: CollectionEntry<'blog'>[]) =>
  * Return all tags for the given list os posts
  */
 export const getTags = (posts: CollectionEntry<'blog'>[]) => {
-    const tags = new Set<string>()
+    const tags = new Map<string, number>()
     for (const post of posts) {
         if (post.data.tags) {
             for (const tag of post.data.tags) {
-                tags.add(tag)
+                const count = tags.get(tag) ?? 0;
+                tags.set(tag, count + 1)
             }
         }
     }
-    return Array.from(tags.values())
+    return tags
+}
+
+export const splitTagsByLetter = (tags: Map<string, number>) => {
+    const tagsByLetter = new Map<string, Map<string, number>>()
+    for (const tag of tags.keys()) {
+        const count = tags.get(tag) ?? 0
+        let firstLetter = tag[0].toLowerCase()
+        if (/[a-z]/.test(firstLetter) === false) {
+            firstLetter = '#'
+        }
+
+        if (!tagsByLetter.has(firstLetter)) {
+            tagsByLetter.set(firstLetter, new Map<string,number>())
+        }
+        
+        tagsByLetter.get(firstLetter)?.set(tag, count)
+    }
+
+    return tagsByLetter
 }
 
 /**
