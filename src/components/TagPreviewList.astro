@@ -2,13 +2,13 @@
 
 interface Props {
     firstLetter: string
-    tags: Map<string, number> | undefined
+    tags: Map<string, number>
     asCard?: boolean
 }
 
 const { firstLetter, tags, asCard = false } = Astro.props
 
-const sortedTags = tags ? new Map([...tags.entries()].sort()) : new Map()
+const sortedTags = new Map([...tags.entries()].sort())
 ---
 <div class={`tag-list ${asCard && 'tag-list--card'}`}>
     <div class="tag-list__letter-box">

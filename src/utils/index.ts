@@ -41,7 +41,7 @@ export const sortPostsDescending = (posts: CollectionEntry<'blog'>[]) =>
     posts.sort((a, b) => b.data.date - a.data.date)
 
 /**
- * Return all tags for the given list os posts
+ * Return all tags for the given list of posts as a map from tag name to tag count
  */
 export const getTags = (posts: CollectionEntry<'blog'>[]) => {
     const tags = new Map<string, number>()
@@ -56,14 +56,16 @@ export const getTags = (posts: CollectionEntry<'blog'>[]) => {
     return tags
 }
 
+/**
+ * Return a map from first letter of a tag to the tag count map of all
+ * tags starting with that first letter. Any tags not starting with a
+ * letter will be stored under '#'.
+ */
 export const splitTagsByLetter = (tags: Map<string, number>) => {
     const tagsByLetter = new Map<string, Map<string, number>>()
     for (const tag of tags.keys()) {
         const count = tags.get(tag) ?? 0
-        let firstLetter = tag[0].toLowerCase()
-        if (/[a-z]/.test(firstLetter) === false) {
-            firstLetter = '#'
-        }
+        const firstLetter = /[A-Za-z]/.test(tag) ? tag[0].toLowerCase() : '#'
 
         if (!tagsByLetter.has(firstLetter)) {
             tagsByLetter.set(firstLetter, new Map<string,number>())
@@ -92,6 +94,23 @@ export const getCategories = (posts: CollectionEntry<'blog'>[]) => {
         }
     }
     return Array.from(categories.values())
+}
+
+/**
+ * Split the list of categories into a map from first letter of the category to
+ * all categories with that first letter. If not starting with a letter, use '#'
+ * as key.
+ */
+export const splitCategoriesByLetter = (categories: string[]) => {
+    const categoriesByLetter = new Map<string, string[]>()
+    categories.map((category) => {
+        const firstLetter = /[A-Za-z]/.test(category) ? category[0].toLowerCase() : '#'
+
+        if (!categoriesByLetter.has(firstLetter)) {categoriesByLetter.set(firstLetter, [])}
+        categoriesByLetter.get(firstLetter)?.push(category)
+    })
+
+    return categoriesByLetter
 }
 
 /**

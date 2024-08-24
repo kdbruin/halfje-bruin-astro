@@ -4,40 +4,27 @@
 //
 
 import { getCollection } from 'astro:content'
+import CategoryPreviewList from '../../components/CategoryPreviewList.astro'
 import DefaultPageLayout from '../../layouts/default.astro'
-import { getCategories } from '../../utils'
+import { getCategories, splitCategoriesByLetter } from '../../utils'
 
 const title = 'Alle Categorieën'
 const description = 'Overzicht van alle gebruikte categorieën.'
 
 const allPosts = await getCollection('blog')
 const categories = getCategories(allPosts)
+const categoriesByLetter = splitCategoriesByLetter(categories)
 ---
 
 <DefaultPageLayout content={{ title, description }}>
-    <ul class="category-list">
-        {
-            categories.map((category) => (
-                <li>
-                    <a
-                        class="category"
-                        href={`/categories/${category}`}
-                        title={`Toon berichten voor categorie "${category}"`}
-                        transition:animate="slide"
-                    >
-                        {category}
-                    </a>
-                </li>
+    {
+        Array.from(categoriesByLetter.keys())
+            .sort()
+            .map((firstLetter) => (
+                <CategoryPreviewList
+                    firstLetter={firstLetter}
+                    categories={categoriesByLetter.get(firstLetter) ?? []}
+                />
             ))
-        </ul>
-        }
+    }
 </DefaultPageLayout>
-
-<style>
-    .category-list {
-        @apply list-none flex gap-2 flex-wrap;
-    }
-    .category {
-        @apply inline-block text-xl px-4 py-1 rounded-full text-theme-primary bg-theme-dark-primary dark:bg-theme-primary dark:text-theme-dark-primary hover:bg-theme-primary hover:text-theme-dark-primary dark:hover:bg-theme-dark-primary dark:hover:text-theme-primary;
-    }
-</style>

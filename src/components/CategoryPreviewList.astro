@@ -1,0 +1,69 @@
+---
+
+interface Props {
+    firstLetter: string
+    categories: string[]
+    asCard?: boolean
+}
+
+const { firstLetter, categories, asCard = false } = Astro.props
+
+const sortedCategories = categories.sort()
+---
+<div class={`category-list ${asCard && 'category-list--card'}`}>
+    <div class="category-list__letter-box">
+        <div class="category-list__letter">
+            <span class="category-list__letter-char">{firstLetter}</span>
+        </div>
+    </div>
+    <div class="flex-1">
+        <ul class="category-list__list">
+        {
+            sortedCategories.map((category) => (
+            <li>
+                    <a
+                        class="category-list__list-category"
+                        href={`/categories/${category}`}
+                        title={`Toon berichten gecategoryged met "${category}"`}
+                        transition:animate="slide"
+                    >
+                        {category}
+                    </a>
+                </li>
+            ))
+        }
+        </ul>
+    </div>
+</div>
+<style>
+    .category-list {
+        @apply flex mb-4;
+    }
+    .category-list--card {
+        @apply flex flex-col-reverse gap-4 sm:w-72 md:w-60 lg:w-64;
+    }
+    .category-list__letter-box {
+        @apply sm:w-10 md:w-24;
+    }
+    .category-list--card .category-list__letter-box {
+        @apply w-full;
+    }
+    .category-list__letter {
+        @apply flex w-full justify-center;
+    }
+    .category-list--card .category-list__letter {
+        @apply flex gap-1;
+    }
+    .category-list__letter-char {
+        @apply text-4xl font-semibold text-gray-500 dark:text-gray-300 uppercase;
+    }
+    .category-list--card .category-list__letter-char {
+        @apply text-2xl uppercase;
+    }
+    .category-list__list {
+        @apply list-none flex gap-2 flex-wrap;
+    }
+    .category-list__list-category {
+        @apply inline-block text-xl px-4 py-1 hover:text-theme-primary dark:hover:text-theme-dark-primary;
+    }
+</style>
