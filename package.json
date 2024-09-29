@@ -15,11 +15,11 @@
     "cz": "cz"
   },
   "devDependencies": {
-    "@astrojs/mdx": "^3.1.3",
-    "@astrojs/rss": "^4.0.1",
-    "@astrojs/sitemap": "^3.0.3",
-    "@astrojs/svelte": "^5.0.0",
-    "@astrojs/tailwind": "^5.0.3",
+    "@astrojs/mdx": "^3.1.7",
+    "@astrojs/rss": "^4.0.7",
+    "@astrojs/sitemap": "^3.1.6",
+    "@astrojs/svelte": "^5.7.1",
+    "@astrojs/tailwind": "^5.1.1",
     "@biomejs/biome": "1.8.3",
     "@fontsource/fira-sans": "^5.0.18",
     "@tailwindcss/aspect-ratio": "^0.4.2",
@@ -27,7 +27,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^20.0.0",
     "@types/photoswipe": "^4.1.6",
-    "astro": "^4.0.3",
+    "astro": "^4.15.9",
     "astro-icon": "^1.1.0",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
@@ -41,7 +41,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@astrojs/markdoc": "^0.11.3",
+    "@astrojs/markdoc": "^0.11.4",
     "@iconify-json/mdi": "^1.1.68",
     "photoswipe": "^5.4.4"
   },
